@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Creating bluetooth control libraries in Go</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
@@ -25,8 +25,83 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+        <!--
+          Presentation goal:
+          Show people how to take a random bluetooth device they have and create a control library for it
+          Give them the tools and understanding of the process to reverse engineer their own devices
+
+          Android and OSX centric.
+
+          Sections:
+          - The device
+            - MiPow bluetooth LE candle. $15 or so from an online store
+            - Wanted to control it from my laptop as a message notifier, then see what we can do.
+
+          - The app
+            - Downloaded from the Android store - https://play.google.com/store/apps/details?id=com.mipow.androidplaybulbcolor
+            - Gives an idea of the devices functions and capabilities
+
+          - Bluetooth LE - how it works
+            - quite different to old BT stream
+            - discovery
+            - services
+            - characteristics (read/write)
+
+          - Where to start for reverse engineering?
+          - Could decompile the app, but thats a lot of work to comprehend
+            - apktool, dex2jar, jd-gui
+
+          - Let the app do the work for us
+            - Capture a packet log from the app in use
+              - Bluetooth packet capture on the Android device + wireshark. No need to root device.
+                - configuration: Bluetooth HCI snoop log
+                - Turn on in options, and `adb pull /sdcard/Android/data/btsnoop_hci.log` or `/sdcard/btsnoop_hci.log`
+                - Now time to use wireshark to see what is happening
+                - http://nilhcem.com/iot/reverse-engineering-simple-bluetooth-devices - same device!
+
+          - Creating a capture to work from
+            - Write down the time you started, and start a stopwatch
+            - Do an action on the app, and note the time. Start with the simplest actions.
+            - leave ~20 seconds between actions
+
+          - Take your capture file, load into wireshark, and ready to analyse
+            - This is the hard part, you are looking for patterns, and diffing lines
+
+          - Creating a control library
+            - Bluetooth stacks different on diff platforms
+            - No cross platform BT LE lib
+              - https://github.com/go-ble/ble
+              - https://github.com/currantlabs/gatt
+            - Add a CLI for scripting, quite handy when testing
+            - Start with the simplest features, and refine as you implement more complex ones
+
+          - Fuzzing for new features
+            - Script to use our new command lib to try command ranges. Sometimes you can find undocumented modes.
+            - script to check response, we don't need to power cycle it. Eg read battery status
+
+          - Using the control library
+            - meetings app - wired into google calendar to let you extend meetings
+              - callbacks
+
+          - Creating a brew formula
+            - tools for checking the formula
+        -->
+				<section>
+          <h2>Controlling Bluetooth LE devices<h2>
+        </section>
+
+        <section>
+          <div class="fragment">
+          </div>
+        </section>
+
+				<section>
+          <div class="fragment">
+            <p><a href="https://github.com/ajesler/playbulb-candle" target="_blank">Candle control library</a></p>
+            <p><a href="https://github.com/ajesler/candle-calendar" target="_blank">Candle calendar app</a></p>
+            <p><a href="https://github.com/ajesler/homebrew-playbulb-candle/blob/master/playbulb-candle.rb" target="_blank">brew formula</a></p>
+          </div>
+        </section>
 			</div>
 		</div>
 
