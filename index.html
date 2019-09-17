@@ -167,9 +167,48 @@
           </aside>
         </section>
 
+        <!-- Where to start? -->
         <section>
+          <h3>Decompile the app</h3>
+          <h5 class="fragment">apktool, dex2jar, jd-gui</h5>
           <aside class="notes">
+            Extract java source from the apk and piece together how it works
           </aside>
+        </section>
+
+        <!-- Android packet capture -->
+        <section>
+          <div>
+            <h3>Android Bluetooth HCI snoop log</h3>
+            <aside class="notes">
+              Captures bluetooth packets which we can then open with Wireshark
+            </aside>
+          </div>
+        </section>
+
+        <section>
+          <img class="stretch" src="images/hci-snoop-log.png">
+          <aside class="notes">
+            `adb pull /sdcard/Android/data/btsnoop_hci.log` or `/sdcard/btsnoop_hci.log`
+          </aside>
+        </section>
+
+        <!-- Wireshark -->
+        <section>
+          <div>
+            <h3>Wireshark</h3>
+            <aside class="notes">
+              A network protocol analyser
+            </aside>
+          </div>
+        </section>
+
+        <section>
+          <img class="stretch" src="images/wireshark-ble-connect.png">
+        </section>
+
+        <section>
+          <img class="stretch" src="images/wireshark-set-candle-to-green.png">
         </section>
 
         <!--  -->
