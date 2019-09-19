@@ -167,12 +167,18 @@
           </aside>
         </section>
 
+        <section>
+          <h3>How do you understand the protocol?</h3>
+        </section>
+
         <!-- Where to start? -->
         <section>
           <h3>Decompile the app</h3>
-          <h5 class="fragment">apktool, dex2jar, jd-gui</h5>
+          <h5 class="fragment">apktool, dex2jar, jd-gui | apktool, jadx</h5>
           <aside class="notes">
             Extract java source from the apk and piece together how it works
+
+            https://www.evilsocket.net/2017/04/27/Android-Applications-Reversing-101/
           </aside>
         </section>
 
@@ -180,8 +186,10 @@
         <section>
           <div>
             <h3>Android Bluetooth HCI snoop log</h3>
+            <h3 class="fragment">+</h3>
+            <h3 class="fragment">Wireshark</h3>
             <aside class="notes">
-              Captures bluetooth packets which we can then open with Wireshark
+              Captures bluetooth packets which we can then open with Wireshark, a network protocol analyser
             </aside>
           </div>
         </section>
@@ -193,22 +201,27 @@
           </aside>
         </section>
 
-        <!-- Wireshark -->
-        <section>
-          <div>
-            <h3>Wireshark</h3>
-            <aside class="notes">
-              A network protocol analyser
-            </aside>
-          </div>
-        </section>
-
         <section>
           <img class="stretch" src="images/wireshark-ble-connect.png">
         </section>
 
         <section>
           <img class="stretch" src="images/wireshark-set-candle-to-green.png">
+        </section>
+
+        <!-- Capture process -->
+        <section>
+          <div>
+            Delete any HCI log
+            Turn on the HCI log
+            Note the time
+            Set up the app - connect to device
+            Do an action and record the time, repeat
+          </div>
+          <aside class="notes">
+            Start with the simplest action, and do variations of that
+            Looking to be able to spot differences, so larger data sets are useful
+          </aside>
         </section>
 
         <!--  -->
@@ -231,6 +244,13 @@
         </section>
 			</div>
 		</div>
+
+    <!--
+      https://github.com/go-ble/ble/issues/32
+      https://github.com/sandeepmistry/osx-ble-peripheral/blob/master/BLEPeripheral/BPAppDelegate.m#L83
+      https://github.com/noble/noble/tree/master/lib/mac
+      https://github.com/Timeular/noble/commit/e930579c46754565442f1154003fe6e6a1203ee1
+    -->
 
 		<script src="js/reveal.js"></script>
 
