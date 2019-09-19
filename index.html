@@ -240,10 +240,6 @@
         </section>
 
         <section>
-          <img class="stretch" src="images/wireshark-ble-connect.png">
-        </section>
-
-        <section>
           <img class="stretch" src="images/wireshark-ble-write-colour.png">
         </section>
 
@@ -265,21 +261,51 @@
 
         <section>
           <pre style="white-space: pre-wrap; font-size: 1rem;">
-    * FFFB = ?
-        `0x00ff000004000100` red candle effect on
-        `0x00ff0000ff000100` red, no candle effect
-        `0x0018ff0004000100` green, candle efffect
-        `0x0018ff0003000100` cycle through colours. Not from app command.
-        `0x0018ff0003000100` cycle very rapidly (flash) through colours. Not from app command.
-        `0x006e00ff03001400` rainbow fade, max speed
-        `0x006e00ff01000300` single colour, fade in and out. more of a pop back into colour.
-        `0x00000000ff004000` when solid blue full hue. Changing hue value does not change this.
-        `0x00ff000000001400` when in max speed red flashing. 2nd to last byte controls speed of flash. 00-FF. When on FF period is about 2s. 0F
-        `0x00ffff0002001400` rainbow, max speed
-        `0x0000ff000200ae00` rainbow, min speed. 2nd to last byte is speed. 00-FF. FF=2s on each colour, 80 = 1s per colour, 00 = strobe.
-        [rgb][rgb][effect byte][? byte]
-        `0x00ff000001001400` when max speed red pulse. 2nd to last byte is speed of flash. 00-FF. 5s full cycle time when 00, 1s full cycle time when 01, 9s fct when 10, 2mins full cycle time on FF.
+# FFFB = ?
+`0x00ff000004000100` red candle effect on
+`0x00ff0000ff000100` red, no candle effect
+`0x0018ff0004000100` green, candle efffect
+`0x0018ff0003000100` cycle through colours. Not from app command.
+`0x0018ff0003000100` cycle very rapidly (flash) through colours. Not from app command.
+`0x006e00ff03001400` rainbow fade, max speed
+`0x006e00ff01000300` single colour, fade in and out. more of a pop back into colour.
+`0x00000000ff004000` when solid blue full hue. Changing hue value does not change this.
+`0x00ff000000001400` when in max speed red flashing. 2nd to last byte controls speed of flash. 00-FF. When on FF period is about 2s. 0F
+`0x00ffff0002001400` rainbow, max speed
+`0x0000ff000200ae00` rainbow, min speed. 2nd to last byte is speed. 00-FF. FF=2s on each colour, 80 = 1s per colour, 00 = strobe.
+[rgb][rgb][effect byte][? byte]
+`0x00ff000001001400` when max speed red pulse. 2nd to last byte is speed of flash. 00-FF. 5s full cycle time when 00, 1s full cycle time when 01, 9s fct when 10, 2mins full cycle time on FF.
           </pre>
+        </section>
+
+        <section>
+          <pre style="white-space: pre-wrap; font-size: 2rem;">
+`0x00ff000004000100` red candle effect on
+`0x00ff0000ff000100` red, no candle effect
+`0x0018ff0004000100` green, candle efffect
+`0x006e00ff01000300` single colour, fading
+`0x006e00ff03001400` rainbow fade, max speed
+`0x00ffff0002001400` rainbow, max speed
+          </pre>
+        </section>
+
+        <section>
+          <h3>Writing a control library</h3>
+          <aside class="notes">
+            State of cross platform bluetooth is not good. Can write for a specific BLE USB dongle
+
+            Start as simple as possible
+            Get a connection, turn device on/off is good
+            Wrap it in a CLI so can script - this helps with fuzzing
+          </aside>
+        </section>
+
+        <section>
+          <h3>Fuzzing</h3>
+          <aside class="notes">
+            Try values that the app may not let you set. Eg speeds of effects
+            This is where a CLI comes in handy. Can also use gatttool or similar
+          </aside>
         </section>
 
         <!--  -->
@@ -289,8 +315,6 @@
             </aside>
           </div>
         </section>
-
-        <!--  -->
 
         <!-- Wrap up -->
 				<section>
