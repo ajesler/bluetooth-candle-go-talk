@@ -108,6 +108,10 @@
           <img class="stretch" src="images/effects-and-colours.png">
         </section>
 
+        <section>
+          <img class="stretch" src="images/lights-and-timers.png">
+        </section>
+
         <!-- Bluetooth LE -->
         <section>
           <h3>Bluetooth Low Energy</h3>
@@ -127,6 +131,7 @@
           <h3 class="fragment">Server</h3>
           <h3 class="fragment">Characteristic</h3>
           <h3 class="fragment">Service</h3>
+          <h3 class="fragment">Profile</h3>
           <h3 class="fragment">Descriptor</h3>
           <aside class="notes">
             Client: A device that initiates GATT commands and requests, and accepts responses, for example, a computer or smartphone
@@ -134,14 +139,10 @@
             Characteristic: A data value transferred between client and server, for example, the current battery voltage. Can read and write.
             Service: A collection of related characteristics, which operate together to perform a particular function. eg heart rate service, battery, device name
             Descriptor: A descriptor provides additional information about a characteristic. Can be multiple. Optional. eg a unit of measure for a characteristic.
+            Profile: A set of one or more services
           </aside>
         </section>
-        <section>
-          <h3>Service & Characteristic Discovery</h3>
-          <aside class="notes">
-            Can ask what services and characteristics a device supports
-          </aside>
-        </section>
+
         <section>
           <h3>Identifiers</h3>
           <aside class="notes">
@@ -149,9 +150,16 @@
             A value may be read either by specifying the characteristic's UUID, or by a handle value
           </aside>
         </section>
+
+        <!-- What you can do with characteristics -->
         <section>
-          <h3>Notification</h3>
-          <h3 class="fragment">Indication</h3>
+          <h4>Commands</h4>
+          <h4>Requests</h4>
+          <h4>Responses</h4>
+          <h4>Notifications</h4>
+          <h4>Indications</h4>
+          <h4>Confirmations</h4>
+
           <aside class="notes">
             Client requests a value when available, eg a sensor reading. Saves polling.
             Notification does not require a response, and indication does.
@@ -160,18 +168,27 @@
 
         <!-- Discovery -->
         <section>
-          <img class="stretch" src="images/ble-discovery.png">
+          <h3>Service & Characteristic Discovery</h3>
           <aside class="notes">
-            Client requests a value when available, eg a sensor reading. Saves polling.
-            Notification does not require a response, and indication does.
+            Can ask what services and characteristics a device supports
           </aside>
         </section>
 
         <section>
-          <h3>How do you understand the protocol?</h3>
+          <img class="stretch" src="images/ble-discovery.png">
+          <aside class="notes">
+            https://github.com/jnross/Bluetility
+          </aside>
         </section>
 
         <!-- Where to start? -->
+        <section>
+          <h3>Where do you start?</h3>
+          <aside class="notes">
+            This is intended for relatively simple devices. If sophisticated, app might be a better place to start.
+          </aside>
+        </section>
+
         <section>
           <h3>Decompile the app</h3>
           <h5 class="fragment">apktool, dex2jar, jd-gui | apktool, jadx</h5>
@@ -201,27 +218,68 @@
           </aside>
         </section>
 
+        <!-- Capture process -->
+        <section>
+          <div>
+            <h4>Clear the HCI log</h4>
+            <h4 class="fragment">Set up the app - connect to device</h4>
+            <h4 class="fragment">Do an action and record the time, repeat</h4>
+          </div>
+          <aside class="notes">
+            Start with the simplest action, and do variations of that.
+            Looking to be able to spot differences, so larger data sets are useful
+          </aside>
+        </section>
+
         <section>
           <img class="stretch" src="images/wireshark-ble-connect.png">
+        </section>
+
+        <section>
+          <img class="stretch" src="images/wireshark-time-display.png">
+        </section>
+
+        <section>
+          <img class="stretch" src="images/wireshark-ble-connect.png">
+        </section>
+
+        <section>
+          <img class="stretch" src="images/wireshark-ble-write-colour.png">
         </section>
 
         <section>
           <img class="stretch" src="images/wireshark-set-candle-to-green.png">
         </section>
 
-        <!-- Capture process -->
         <section>
-          <div>
-            Delete any HCI log
-            Turn on the HCI log
-            Note the time
-            Set up the app - connect to device
-            Do an action and record the time, repeat
-          </div>
+          <h3>Now the boring|fun bit</h3>
+        </section>
+
+        <section>
+          <img class="stretch" src="images/ble-discovery.png">
           <aside class="notes">
-            Start with the simplest action, and do variations of that
-            Looking to be able to spot differences, so larger data sets are useful
+            Dumping diffs of the addtributes would be helpful
+            But most devices will only allow one connection at at time :(
           </aside>
+        </section>
+
+        <section>
+          <pre style="white-space: pre-wrap; font-size: 1rem;">
+    * FFFB = ?
+        `0x00ff000004000100` red candle effect on
+        `0x00ff0000ff000100` red, no candle effect
+        `0x0018ff0004000100` green, candle efffect
+        `0x0018ff0003000100` cycle through colours. Not from app command.
+        `0x0018ff0003000100` cycle very rapidly (flash) through colours. Not from app command.
+        `0x006e00ff03001400` rainbow fade, max speed
+        `0x006e00ff01000300` single colour, fade in and out. more of a pop back into colour.
+        `0x00000000ff004000` when solid blue full hue. Changing hue value does not change this.
+        `0x00ff000000001400` when in max speed red flashing. 2nd to last byte controls speed of flash. 00-FF. When on FF period is about 2s. 0F
+        `0x00ffff0002001400` rainbow, max speed
+        `0x0000ff000200ae00` rainbow, min speed. 2nd to last byte is speed. 00-FF. FF=2s on each colour, 80 = 1s per colour, 00 = strobe.
+        [rgb][rgb][effect byte][? byte]
+        `0x00ff000001001400` when max speed red pulse. 2nd to last byte is speed of flash. 00-FF. 5s full cycle time when 00, 1s full cycle time when 01, 9s fct when 10, 2mins full cycle time on FF.
+          </pre>
         </section>
 
         <!--  -->
@@ -241,6 +299,11 @@
             <p><a href="https://github.com/ajesler/candle-calendar" target="_blank">Candle calendar app</a></p>
             <p><a href="https://github.com/ajesler/homebrew-playbulb-candle/blob/master/playbulb-candle.rb" target="_blank">brew formula</a></p>
           </div>
+        </section>
+
+        <section>
+          <h3>Further reading</h3>
+          <a href="https://duo.com/decipher/understanding-bluetooth-security">Understanding Bluetooth security</a>
         </section>
 			</div>
 		</div>

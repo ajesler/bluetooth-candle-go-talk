@@ -89,10 +89,10 @@ Advertises a service on FF02 with the following characteristics:
     * FFFA = ? active effect?
         `0x00` with a solid blue light, no effects on
         `0x00` with a max speed red pulse
-    * FFFB = ? 
+    * FFFB = ?
         When cycling through colours in Rainbow Fade, the value is something like `0x00 0064ff 0300 0a00` where the second part is the hex colour of the candle at that instant. This characteristic constantly changes in this mode. final block may be speed of colour change in Rainbow Fade mode.
         `0x00000000ff004000` when solid blue full hue. Changing hue value does not change this.
-        `0x00ff000000001400` when in max speed red flashing. 2nd to last byte controls speed of flash. 00-FF. When on FF period is about 2s. 0F ~  
+        `0x00ff000000001400` when in max speed red flashing. 2nd to last byte controls speed of flash. 00-FF. When on FF period is about 2s. 0F
         [rgb][rgb][effect byte][? byte]
         `0x00ff000001001400` when max speed red pulse. 2nd to last byte is speed of flash. 00-FF. 5s full cycle time when 00, 1s full cycle time when 01, 9s fct when 10, 2mins full cycle time on FF.
         `0x00ff000004000100` red candle effect on
