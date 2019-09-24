@@ -138,9 +138,16 @@
             Server: A device that receives GATT commands and requests, and returns responses, for example, a temperature sensor.
             Characteristic: A data value transferred between client and server, for example, the current battery voltage. Can read and write.
             Service: A collection of related characteristics, which operate together to perform a particular function. eg heart rate service, battery, device name
+              16 bit for the predefined services
+              128 bit for those created specifically by peripheral devices manufacturers
             Descriptor: A descriptor provides additional information about a characteristic. Can be multiple. Optional. eg a unit of measure for a characteristic.
             Profile: A set of one or more services
           </aside>
+        </section>
+
+        <section>
+          <h3>Central</h3>
+          <h3>Peripheral</h3>
         </section>
 
         <section>
@@ -194,9 +201,14 @@
           <h5 class="fragment">apktool, dex2jar, jd-gui | apktool, jadx</h5>
           <aside class="notes">
             Extract java source from the apk and piece together how it works
+            Look for Android BLE API usage.
 
             https://www.evilsocket.net/2017/04/27/Android-Applications-Reversing-101/
           </aside>
+        </section>
+
+        <section>
+          <h3>Bluetooth packet capture</h3>
         </section>
 
         <!-- Android packet capture -->
@@ -227,6 +239,7 @@
           </div>
           <aside class="notes">
             Start with the simplest action, and do variations of that.
+            Same operation, variable parameters.
             Looking to be able to spot differences, so larger data sets are useful
           </aside>
         </section>
@@ -241,6 +254,9 @@
 
         <section>
           <img class="stretch" src="images/wireshark-ble-write-colour.png">
+          <aside class="notes">
+            btl2cap.cid == 0x0004
+          </aside>
         </section>
 
         <section>
@@ -254,9 +270,14 @@
         <section>
           <img class="stretch" src="images/ble-discovery.png">
           <aside class="notes">
-            Dumping diffs of the addtributes would be helpful
+            Dumping diffs of the attributes would be helpful
             But most devices will only allow one connection at at time :(
           </aside>
+        </section>
+
+        <section>
+          <h3>hcitool</h3>
+          <h3>gatttool</h3>
         </section>
 
         <section>
@@ -301,6 +322,10 @@
         </section>
 
         <section>
+          <h3>&lt;insert cross platform rant here&gt;</h3>
+        </section>
+
+        <section>
           <h3>Fuzzing</h3>
           <aside class="notes">
             Try values that the app may not let you set. Eg speeds of effects
@@ -321,7 +346,7 @@
           <h3>Homebrew Formula</h3>
           <pre><code class="shell">
 # New repo named hombrew-playbulb-candle
-brew create <repo>
+brew create [repo]
 # To test:
 brew install --build-from-source ./playbulb-candle.rb
 
@@ -374,6 +399,15 @@ end
             <p><a href="https://github.com/ajesler/homebrew-playbulb-candle/blob/master/playbulb-candle.rb" target="_blank">brew formula</a></p>
           </div>
         </section>
+
+        <!--
+http://blog.firszt.eu/index.php?post/2015/09/13/bt
+https://github.com/pcborenstein/bluezDoc/wiki/hcitool-and-gatttool-example
+https://learn.adafruit.com/reverse-engineering-a-bluetooth-low-energy-light-bulb
+https://medium.com/@arunmag/my-journey-towards-reverse-engineering-a-smart-band-bluetooth-le-re-d1dea00e4de2
+https://www.instructables.com/id/Reverse-Engineering-Smart-Bluetooth-Low-Energy-Dev/
+https://reverse-engineering-ble-devices.readthedocs.io/en/latest/index.html
+        -->
 
         <section>
           <h3>Further reading</h3>
